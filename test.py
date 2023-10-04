@@ -1,6 +1,7 @@
 # Import necessary libraries
 from psychopy import visual, core, event, gui, data
 import random
+import numpy as np
 import os
 
 
@@ -36,8 +37,20 @@ thisExp = data.ExperimentHandler(name=expName, version='',
 
 
 # Define a list of shape stimuli
-shapes = ['square', 'diamond', 'circle', 'polygon', 'pie']
+shapes = ['square', 'diamond', 'circle', 'polygon', 'pie', 'star']
 trial_number = 5
+
+########################
+##   Star 6 Stimulus  ##
+########################
+nVerts = 12
+star_verts = np.zeros((nVerts,2))
+for vert_num in np.arange(0,star_verts.shape[0]):
+    main_radius = 20
+    if vert_num % 2 == 1:
+        main_radius = main_radius*.65
+    star_verts[vert_num, 0] = main_radius*np.sin(np.deg2rad(360/nVerts * vert_num))
+    star_verts[vert_num,1] = main_radius*np.cos(np.deg2rad(360/nVerts * vert_num))
 
 for n in range(trial_number-1):
     # Create a grid of shape stimuli
@@ -51,6 +64,7 @@ for n in range(trial_number-1):
     # a new list without the target
     available_shapes = shapes.copy()
     available_shapes.remove(target)
+
 
     def drawer(shape):
         if shape == 'square':
@@ -78,6 +92,14 @@ for n in range(trial_number-1):
                                 lineColor='black', 
                                 fillColor='red',
                                 name='pie')  
+        elif shape== 'star':
+            figure = visual.ShapeStim(
+            win,
+            vertices = star_verts,
+            units = 'deg',
+            lineColor = 'black',
+            fillColor = 'red')
+
         return figure
 
     # Display the visual que in the middle of grid (fixed size)
