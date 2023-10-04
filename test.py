@@ -9,14 +9,14 @@ n_rows = 3
 n_cols = 3
 
 # Create a window
-win = visual.Window([800, 800], units='pix', fullscr=False)
+win = visual.Window([800, 800], units='pix', fullscr=False,  color=(1,1,1), colorSpace='rgb')
 
 # Ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-psychopyVersion = '2020.2.8'
+
 expName = 'visual-search'  # from the Builder filename that created this script
 expInfo = {'participant': '', 'session': '001'}
 dlg = gui.DlgFromDict(dictionary=expInfo, sortKeys=False, title=expName)
@@ -24,7 +24,6 @@ if dlg.OK == False:
     core.quit()  # user pressed cancel
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
-expInfo['psychopyVersion'] = psychopyVersion
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
 filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])
 
@@ -37,7 +36,7 @@ thisExp = data.ExperimentHandler(name=expName, version='',
 
 
 # Define a list of shape stimuli
-shapes = ['square', 'heart', 'circle', 'polygon', 'pie']
+shapes = ['square', 'diamond', 'circle', 'polygon', 'pie']
 trial_number = 5
 
 for n in range(trial_number-1):
@@ -59,13 +58,13 @@ for n in range(trial_number-1):
                                 lineColor='black', 
                                 fillColor='red',
                                 name='square')
-        elif shape == 'heart':
+        elif shape == 'diamond':
             figure = visual.ShapeStim(win, 
                                     vertices=[[-50, 0], [0, 50], [50, 0], [0, -50]],
                                     fillColor='red',
-                                    name='heart')
+                                    name='diamond')
         elif shape == 'circle':
-            figure = visual.Circle(win, radius = 70,
+            figure = visual.Circle(win, radius = 50,
                                 lineColor='black', 
                                 fillColor='red',
                                 name='circle')
@@ -75,7 +74,7 @@ for n in range(trial_number-1):
                                     fillColor='red',
                                     name='polygon')
         elif shape == 'pie':
-            figure = visual.Pie(win, size = 160,
+            figure = visual.Pie(win, size = 100,
                                 lineColor='black', 
                                 fillColor='red',
                                 name='pie')  
