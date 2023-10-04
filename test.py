@@ -9,7 +9,7 @@ n_rows = 3
 n_cols = 3
 
 # Create a window
-win = visual.Window([800, 800], units='pix', fullscr=False)
+win = visual.Window([800, 800], units='pix', fullscr=False, color=[1,1,1], colorSpace='rgb')
 
 # Ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__))
@@ -31,13 +31,12 @@ filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expNa
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath=r'C:\Users\zuzal\Masters\02455 Experiment in cognitive  science',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 
 
 # Define a list of shape stimuli
-shapes = ['square', 'heart', 'circle', 'polygon', 'pie']
+shapes = ['square', 'diamond', 'circle', 'triangle', 'hexagon', 'heart']
 trial_number = 5
 
 for n in range(trial_number-1):
@@ -53,32 +52,44 @@ for n in range(trial_number-1):
     available_shapes = shapes.copy()
     available_shapes.remove(target)
 
+    # shapes color parameters 
+    space='rgb'
+    colorRGB=[0,0,0]
+
     def drawer(shape):
         if shape == 'square':
             figure = visual.Rect(win, width=100, height=100, 
-                                lineColor='black', 
-                                fillColor='red',
+                                fillColor=colorRGB,
+                                colorSpace=space,
                                 name='square')
-        elif shape == 'heart':
+        elif shape == 'diamond':
             figure = visual.ShapeStim(win, 
                                     vertices=[[-50, 0], [0, 50], [50, 0], [0, -50]],
-                                    fillColor='red',
+                                    fillColor=colorRGB,
+                                    colorSpace=space,
+                                    name='diamond')
+        elif shape == 'hexagon':
+            figure = visual.ShapeStim(win, 
+                                    vertices=[(0, 58), (-50, 29), (-50, -29), (0, -58), (50, -29), (50, 29)], 
+                                    fillColor=colorRGB,
+                                    colorSpace=space,
+                                    name='hexagon')
+        elif shape == 'heart':
+            figure = visual.ShapeStim(win, 
+                                    vertices = [(0, 50),(-20, 30),(-30, 10),(-30, -20),(0, -50),(30, -20),(30, 10),(20, 30)],
+                                    fillColor=colorRGB,
+                                    colorSpace=space,
                                     name='heart')
         elif shape == 'circle':
-            figure = visual.Circle(win, radius = 70,
-                                lineColor='black', 
-                                fillColor='red',
-                                name='circle')
-        elif shape == 'polygon':
+            figure = visual.Circle(win, radius = 50,
+                                    fillColor=colorRGB,
+                                    colorSpace=space,
+                                    name='circle')
+        elif shape == 'triangle':
             figure = visual.Polygon(win, size=100, 
-                                    lineColor='black', 
-                                    fillColor='red',
-                                    name='polygon')
-        elif shape == 'pie':
-            figure = visual.Pie(win, size = 160,
-                                lineColor='black', 
-                                fillColor='red',
-                                name='pie')  
+                                    fillColor=colorRGB,
+                                    colorSpace=space,
+                                    name='triangle')
         return figure
 
     # Display the visual que in the middle of grid (fixed size)
@@ -88,7 +99,7 @@ for n in range(trial_number-1):
     core.wait(3.0)
 
     # Display the task
-    message = visual.TextStim(win, text=f"Find the {target.name}")
+    message = visual.TextStim(win, text=f"Find the {target.name}", color='black')
     message.draw()
     win.flip()
     core.wait(3.0)
@@ -132,7 +143,7 @@ for n in range(trial_number-1):
     # Display the recorded time
     time_message = visual.TextStim(win, 
                                 text=f"Response Time: {response_time:.2f} seconds",
-                                pos=(0, -100), height=20)
+                                pos=(0, -100), height=20, color='black')
     time_message.draw()
     thisExp.addData('response_time', response_time)
     thisExp.nextEntry()
@@ -141,7 +152,7 @@ for n in range(trial_number-1):
 
 
 end_message = visual.TextStim(win, 
-                                text="Press any key to end experiment")
+                                text="Press any key to end experiment", color='black')
 end_message.draw()
 win.flip()
 event.waitKeys()
