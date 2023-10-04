@@ -1,1 +1,5 @@
 # CognitiveExperiment
+
+It is a group project for the course [Experiment in Cognitive Science (02455)](https://kurser.dtu.dk/course/02455) offered by the [Technical University of Denmark](dtu.dk) in fall 2023. Our group members are Agne Kundrotaite(s223192), Zuzanna Natalia Rowinska(s220351) and Xueying Chen(s216410).
+
+This project is built on **mental imagination**, which continues to beckon our curiosity. Our endeavor is rooted in the belief that we can unearth valuable insights into its elusive role within the cognitive process, by probing the external signs. It seeks to contribute to the ongoing discourse by investigating the impact of self-generated mental imagery on object-searching tasks. Our primary objective is to determine whether participants when instructed to employ mental imagery, would exhibit improved per- formance in these tasks when compared to no mental imagery involved.
