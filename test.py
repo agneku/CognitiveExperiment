@@ -1,5 +1,6 @@
 # Import necessary libraries
 from psychopy import visual, core, event, gui, data
+import numpy as np
 import random
 import os
 
@@ -55,6 +56,24 @@ for n in range(trial_number-1):
     # shapes color parameters 
     space='rgb'
     colorRGB=[0,0,0]
+    
+    # Heart shape componet:
+    # Create an array of parameter values from 0 to 2π
+    t = np.linspace(0, 2 * np.pi, 1000)
+    
+    # Parametric equations for x(t) and y(t) for the heart shape
+    x = 16 * np.sin(t)**3
+    y = 13 * np.cos(t) - 5 * np.cos(2*t) - 2 * np.cos(3*t) - np.cos(4*t)
+    
+    # Scale and shift the x and y coordinates to fit the window
+    x = (x - np.min(x)) / (np.max(x) - np.min(x))  # Scale to [0, 1]
+    x = (x - 0.5)
+    
+    y = (y - np.min(y)) / (np.max(y) - np.min(y))  # Scale to [0, 1]
+    y = (y - 0.5)
+    
+    # Create a list of vertices for the heart shape
+    vertices = list(zip(x, y))
 
     def drawer(shape):
         if shape == 'square':
@@ -76,9 +95,10 @@ for n in range(trial_number-1):
                                     name='hexagon')
         elif shape == 'heart':
             figure = visual.ShapeStim(win, 
-                                    vertices = [(0, 50),(-20, 30),(-30, 10),(-30, -20),(0, -50),(30, -20),(30, 10),(20, 30)],
+                                    vertices = vertices,
                                     fillColor=colorRGB,
                                     colorSpace=space,
+                                    size=100,
                                     name='heart')
         elif shape == 'circle':
             figure = visual.Circle(win, radius = 50,
@@ -152,7 +172,8 @@ for n in range(trial_number-1):
 
 
 end_message = visual.TextStim(win, 
-                                text="Press any key to end experiment", color='black')
+                              text="Press any key to end experiment",
+                              color='black')
 end_message.draw()
 win.flip()
 event.waitKeys()
