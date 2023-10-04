@@ -1,6 +1,8 @@
 # Import necessary libraries
-from psychopy import visual, core, event
+from psychopy import visual, core, event, gui, data
 import random
+import os
+
 
 # grid size
 n_rows = 3
@@ -8,6 +10,31 @@ n_cols = 3
 
 # Create a window
 win = visual.Window([800, 800], units='pix', fullscr=False)
+
+# Ensure that relative paths start from the same directory as this script
+_thisDir = os.path.dirname(os.path.abspath(__file__))
+os.chdir(_thisDir)
+
+# Store info about the experiment session
+psychopyVersion = '2020.2.8'
+expName = 'visual-search'  # from the Builder filename that created this script
+expInfo = {'participant': '', 'session': '001'}
+dlg = gui.DlgFromDict(dictionary=expInfo, sortKeys=False, title=expName)
+if dlg.OK == False:
+    core.quit()  # user pressed cancel
+expInfo['date'] = data.getDateStr()  # add a simple timestamp
+expInfo['expName'] = expName
+expInfo['psychopyVersion'] = psychopyVersion
+# Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
+filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])
+
+# An ExperimentHandler isn't essential but helps with data saving
+thisExp = data.ExperimentHandler(name=expName, version='',
+    extraInfo=expInfo, runtimeInfo=None,
+    originPath=r'C:\Users\zuzal\Masters\02455 Experiment in cognitive  science',
+    savePickle=True, saveWideText=True,
+    dataFileName=filename)
+
 
 # Define a list of shape stimuli
 shapes = ['square', 'heart', 'circle', 'polygon', 'pie']
@@ -107,6 +134,8 @@ for n in range(trial_number-1):
                                 text=f"Response Time: {response_time:.2f} seconds",
                                 pos=(0, -100), height=20)
     time_message.draw()
+    thisExp.addData('response_time', response_time)
+    thisExp.nextEntry()
     win.flip()
     core.wait(2.0)
 
@@ -116,7 +145,11 @@ end_message = visual.TextStim(win,
 end_message.draw()
 win.flip()
 event.waitKeys()
-
+# these shouldn't be strictly necessary (should auto-save)
+thisExp.saveAsWideText(filename+'.csv', delim='auto')
+thisExp.saveAsPickle(filename)
+# make sure everything is closed down
+thisExp.abort()  # or data files will save again on exit
 # Close the window
 win.close()
 
