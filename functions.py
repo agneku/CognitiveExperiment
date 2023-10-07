@@ -1,10 +1,11 @@
-import random 
 from psychopy import visual, core, event
+import random 
 import numpy as np
 
 def stratify_cues(count_per_type=20):
 
-    cues = sum([['visual_cue']*count_per_type, ['mental_cue']*count_per_type, ['no_cue']*count_per_type], [])
+    cues = sum([['visual_cue']*count_per_type, ['mental_cue']*count_per_type,
+                ['no_cue']*count_per_type], [])
 
     # Shuffle the selected elements to ensure randomness
     # in place method
@@ -47,7 +48,6 @@ def drawer(shape, win, space='rgb', colorRGB=[0,0,0]):
     # Create a list of vertices for the heart shape
     vertices = list(zip(x, y))
 
-
     if shape == 'square':
         figure = visual.Rect(win, width=100, height=100, 
                             fillColor=colorRGB,
@@ -58,6 +58,7 @@ def drawer(shape, win, space='rgb', colorRGB=[0,0,0]):
                                 vertices=[[-50, 0], [0, 50], [50, 0], [0, -50]],
                                 fillColor=colorRGB,
                                 colorSpace=space,
+                                size=1.16,
                                 name='diamond')
     elif shape == 'hexagon':
         figure = visual.ShapeStim(win, 
@@ -78,7 +79,7 @@ def drawer(shape, win, space='rgb', colorRGB=[0,0,0]):
                                 colorSpace=space,
                                 name='circle')
     elif shape == 'triangle':
-        figure = visual.Polygon(win, size=100, 
+        figure = visual.Polygon(win, size=130, 
                                 fillColor=colorRGB,
                                 colorSpace=space,
                                 name='triangle')

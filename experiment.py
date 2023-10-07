@@ -1,17 +1,17 @@
 # Import necessary libraries
 from psychopy import visual, core, event, gui, data
 import numpy as np
+import functions
 import random
 import os
-import functions
-
 
 # grid size
 n_rows = 3
 n_cols = 3
 
 # Create a window
-win = visual.Window([800, 800], units='pix', fullscr=False, color=[1,1,1], colorSpace='rgb')
+win = visual.Window([800, 800], units='pix', fullscr=False, color=[1,1,1], 
+                    colorSpace='rgb')
 
 # Ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__))
@@ -28,7 +28,8 @@ expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
 expInfo['psychopyVersion'] = psychopyVersion
 # Data file name stem = absolute path + name; later add .psyexp, .csv, .log, etc
-filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])
+filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], 
+                                                  expName, expInfo['date'])
 
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
@@ -45,6 +46,16 @@ trial_number = len(cues_stratified_order)
 shapes = ['square', 'diamond', 'circle', 'triangle', 'hexagon', 'heart']
 
 for n in range(trial_number):
+    # Create a pause button
+    pause_button = visual.TextBox2(win, text="Pause", pos=(500, 360),
+                                   size=[None, None], colorSpace='rgb',
+                                   color='grey',
+                                   autoLog=False,
+                                   autoDraw=True)
+    pause_button.draw()
+    is_paused = False
+    paused_duration = 0
+    
     # Create a grid of shape stimuli
     grid = [[None for _ in range(n_rows)] for _ in range(n_cols)]
 
@@ -56,8 +67,7 @@ for n in range(trial_number):
     # a new list without the target
     available_shapes = shapes.copy()
     available_shapes.remove(target)
-
-
+    
     target = functions.drawer(target, win)
     
     # select one of the cues (visual, imagery, no_cue) 
@@ -99,22 +109,47 @@ for n in range(trial_number):
     clock = core.Clock()
 
     # Wait for the user to click on the target shape
+    # or click pause
     while True:
         mouse = event.Mouse()
         if mouse.isPressedIn(target):
-            break
+            if not is_paused:
+                break
+        if mouse.isPressedIn(pause_button):
+            if not is_paused:
+                is_paused = True
+                pause_time = clock.getTime()
+                print("Experiment Paused")
+                paused_msg = visual.TextStim(win, text="Experiment Paused",
+                                             color='black',
+                                             autoLog=False)
+                paused_msg.draw()
+                win.flip()
+            else:
+                is_paused = False
+                paused_duration += clock.getTime() - pause_time
+                pause_time = None
+                # display the grid again
+                for row in grid:
+                    for shape in row:
+                        shape.draw()
+                win.flip()
+                print(f"Experiment Resumes after {paused_duration: .2f} seconds")
 
     # Record the time when the user clicked on the target
-    response_time = clock.getTime()
+    response_time = clock.getTime() - paused_duration
+    print(response_time)
 
     # Display the recorded time
-    functions.display_text(f"Response Time: {response_time:.2f} seconds", win, time_of_display=1.5)
+    functions.display_text(f"Response Time: {response_time:.2f} seconds",
+                           win, time_of_display=1.5)
 
     thisExp.addData('response_time', response_time)
     thisExp.nextEntry()
 
 #DISPLAY END MESSAGE
-functions.display_text("Press any key to end experiment", win, time_of_display=1.5, time=False)
+functions.display_text("Press any key to end experiment", win, 
+                       time_of_display=1.5, time=False)
 
 # these shouldn't be strictly necessary (should auto-save)
 thisExp.saveAsWideText(filename+'.csv', delim='auto')
