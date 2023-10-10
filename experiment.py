@@ -67,11 +67,15 @@ for n in range(trial_number):
     # a new list without the target
     available_shapes = shapes.copy()
     available_shapes.remove(target)
+
+    #Display start the trial Page
+    functions.display_text('Press space to start next trial', win, time=False)
     
     target = functions.drawer(target, win)
     
     # select one of the cues (visual, imagery, no_cue) 
     functions.select_cue(cues_stratified_order, win, target)
+    cue_type=cues_stratified_order[-1]
     # remove the last element of startified cues list 
     cues_stratified_order.pop()
 
@@ -135,6 +139,13 @@ for n in range(trial_number):
                         shape.draw()
                 win.flip()
                 print(f"Experiment Resumes after {paused_duration: .2f} seconds")
+        keys = event.getKeys()
+        if keys:
+            # q quits the experiment
+            if keys[0] == 'q':
+                core.quit()
+                break
+
 
     # Record the time when the user clicked on the target
     response_time = clock.getTime() - paused_duration
@@ -145,6 +156,7 @@ for n in range(trial_number):
                            win, time_of_display=1.5)
 
     thisExp.addData('response_time', response_time)
+    thisExp.addData('cue_type',cue_type )
     thisExp.nextEntry()
 
 #DISPLAY END MESSAGE
