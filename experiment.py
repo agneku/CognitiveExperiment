@@ -47,14 +47,14 @@ shapes = ['square', 'diamond', 'circle', 'triangle', 'hexagon', 'heart']
 
 for n in range(trial_number):
     # Create a pause button
-    pause_button = visual.TextBox2(win, text="Pause", pos=(500, 360),
-                                   size=[None, None], colorSpace='rgb',
-                                   color='grey',
-                                   autoLog=False,
-                                   autoDraw=True)
-    pause_button.draw()
-    is_paused = False
-    paused_duration = 0
+#    pause_button = visual.TextBox2(win, text="Pause", pos=(500, 360),
+#                                   size=[None, None], colorSpace='rgb',
+#                                   color='grey',
+#                                   autoLog=False,
+#                                   autoDraw=True)
+#    pause_button.draw()
+#    is_paused = False
+#    paused_duration = 0
     
     # Create a grid of shape stimuli
     grid = [[None for _ in range(n_rows)] for _ in range(n_cols)]
@@ -69,7 +69,7 @@ for n in range(trial_number):
     available_shapes.remove(target)
 
     #Display start the trial Page
-    functions.display_text('Press space to start next trial', win, time=False)
+    functions.display_text('Press space to start a trial', win, time=False)
     
     target = functions.drawer(target, win)
     
@@ -117,28 +117,28 @@ for n in range(trial_number):
     while True:
         mouse = event.Mouse()
         if mouse.isPressedIn(target):
-            if not is_paused:
-                break
-        if mouse.isPressedIn(pause_button):
-            if not is_paused:
-                is_paused = True
-                pause_time = clock.getTime()
-                print("Experiment Paused")
-                paused_msg = visual.TextStim(win, text="Experiment Paused",
-                                             color='black',
-                                             autoLog=False)
-                paused_msg.draw()
-                win.flip()
-            else:
-                is_paused = False
-                paused_duration += clock.getTime() - pause_time
-                pause_time = None
-                # display the grid again
-                for row in grid:
-                    for shape in row:
-                        shape.draw()
-                win.flip()
-                print(f"Experiment Resumes after {paused_duration: .2f} seconds")
+#        if not is_paused:
+            break
+#        if mouse.isPressedIn(pause_button):
+#            if not is_paused:
+#                is_paused = True
+#                pause_time = clock.getTime()
+#                print("Experiment Paused")
+#                paused_msg = visual.TextStim(win, text="Experiment Paused",
+#                                             color='black',
+#                                             autoLog=False)
+#                paused_msg.draw()
+#                win.flip()
+#            else:
+#                is_paused = False
+#                paused_duration += clock.getTime() - pause_time
+#                pause_time = None
+#                # display the grid again
+#                for row in grid:
+#                    for shape in row:
+#                        shape.draw()
+#                win.flip()
+#                print(f"Experiment Resumes after {paused_duration: .2f} seconds")
         keys = event.getKeys()
         if keys:
             # q quits the experiment
@@ -148,7 +148,8 @@ for n in range(trial_number):
 
 
     # Record the time when the user clicked on the target
-    response_time = clock.getTime() - paused_duration
+#    response_time = clock.getTime() - paused_duration
+    response_time = clock.getTime()
     print(response_time)
 
     # Display the recorded time
