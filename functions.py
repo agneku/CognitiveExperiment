@@ -13,7 +13,7 @@ def stratify_cues(count_per_type=20):
     return cues
 
 
-def draw_fixation_piont(win):
+def draw_fixation_piont(win, time):
     # Create a fixation point stimulus at the center
     fixation = visual.ShapeStim(win=win,
                                 vertices=((0, -20), (0, 20), (0, 0), (-20, 0), (20, 0)),
@@ -25,7 +25,7 @@ def draw_fixation_piont(win):
     # Function to display fixation point
     fixation.draw()
     win.flip()
-    core.wait(2)  
+    core.wait(time)  
 
 
 def drawer(shape, win, space='rgb', colorRGB=[0,0,0]):
@@ -104,7 +104,9 @@ def select_cue(cue_order, win, target):
         win.flip()
         core.wait(3.0)
     if cue == 'mental_cue':
-        display_text(f"Imagine a {target.name}", win, time_of_display=3)
+        display_text(f"Imagine a {target.name}", win, time_of_display=1.5)
+        win.flip()
+        core.wait(3.0)
     if cue == 'no_cue':
         win.flip()
         core.wait(3.0)

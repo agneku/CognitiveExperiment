@@ -83,7 +83,7 @@ for n in range(trial_number):
     functions.display_text(f"Find the {target.name}", win, time_of_display=1.5)
 
     #DISPLAY FIXATION POINT
-    functions.draw_fixation_piont(win)
+    functions.draw_fixation_piont(win, random.uniform(1,3))
 
     # Create shape stimuli and randomly fill the grid
     for row in range(n_rows):
