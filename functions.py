@@ -19,8 +19,7 @@ def draw_fixation_piont(win, time):
                                 vertices=((0, -20), (0, 20), (0, 0), (-20, 0), (20, 0)),
                                 lineWidth=5,
                                 closeShape=False,
-                                lineColor='black'
-                                )
+                                lineColor='black')
 
     # Function to display fixation point
     fixation.draw()
@@ -52,37 +51,43 @@ def drawer(shape, win, space='rgb', colorRGB=[0,0,0]):
         figure = visual.Rect(win, width=100, height=100, 
                             fillColor=colorRGB,
                             colorSpace=space,
-                            name='square')
+                            name='square',
+                            lineColor=colorRGB)
     elif shape == 'diamond':
         figure = visual.ShapeStim(win, 
                                 vertices=[[-50, 0], [0, 50], [50, 0], [0, -50]],
                                 fillColor=colorRGB,
                                 colorSpace=space,
                                 size=1.16,
-                                name='diamond')
+                                name='diamond',
+                                lineColor=colorRGB)
     elif shape == 'hexagon':
         figure = visual.ShapeStim(win, 
                                 vertices=[(0, 58), (-50, 29), (-50, -29), (0, -58), (50, -29), (50, 29)], 
                                 fillColor=colorRGB,
                                 colorSpace=space,
-                                name='hexagon')
+                                name='hexagon',
+                                lineColor=colorRGB)
     elif shape == 'heart':
         figure = visual.ShapeStim(win, 
                                 vertices = vertices,
                                 fillColor=colorRGB,
                                 colorSpace=space,
                                 size=100,
-                                name='heart')
+                                name='heart',
+                                lineColor=colorRGB)
     elif shape == 'circle':
         figure = visual.Circle(win, radius = 50,
                                 fillColor=colorRGB,
                                 colorSpace=space,
-                                name='circle')
+                                name='circle',
+                                lineColor=colorRGB)
     elif shape == 'triangle':
         figure = visual.Polygon(win, size=130, 
                                 fillColor=colorRGB,
                                 colorSpace=space,
-                                name='triangle')
+                                name='triangle',
+                                lineColor=colorRGB)
     return figure
 
 
