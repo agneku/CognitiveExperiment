@@ -10,9 +10,7 @@ import os
 n_rows = 3
 n_cols = 3
 
-# Create a window
-win = visual.Window([800, 800], units='pix', fullscr=False, color=[1,1,1], 
-                    colorSpace='rgb')
+
 
 # Ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__))
@@ -36,6 +34,10 @@ thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
     savePickle=True, saveWideText=True,
     dataFileName=filename)
+
+# Create a window
+win = visual.Window([800, 800], units='pix', fullscr=True, color=[1,1,1], 
+                    colorSpace='rgb')
 
 # count_per_type = 20 in the final version (20 of each types of cues)
 cues_stratified_order = functions.stratify_cues(count_per_type=2)
