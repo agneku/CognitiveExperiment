@@ -16,7 +16,7 @@ os.chdir(_thisDir)
 
 # Store info about the experiment session
 expName = 'visual-search'  # from the Builder filename that created this script
-expInfo = {'participant_id': '', 'gender': '', 'session': '001'}
+expInfo = {'participant_id': '', 'gender': '', 'age': '', 'session': '001'}
 dlg = gui.DlgFromDict(dictionary=expInfo, sortKeys=False, title=expName)
 if dlg.OK == False:
     core.quit()  # user pressed cancel
@@ -82,8 +82,7 @@ for n in range(trial_number):
     functions.display_text(f"Find the {target.name}", win, time_of_display=1.5)
 
     #DISPLAY FIXATION POINT
-    mouse = event.Mouse()
-    mouse.setPos(newPos=(0, 0))
+    functions.mouse_center()
     functions.draw_fixation_piont(win, random.uniform(1,3))
 
 

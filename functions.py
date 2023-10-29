@@ -1,6 +1,7 @@
 from psychopy import visual, core, event
 import random 
 import numpy as np
+import math
 
 def stratify_cues(count_per_type=20):
 
@@ -118,6 +119,7 @@ def select_cue(cue_order, win, target):
     return cue_order
 
 
+'''
 def present_shapes(shapes, win):
     display_text('Press space to view all shapes', win, time=False)
 
@@ -126,8 +128,49 @@ def present_shapes(shapes, win):
         target = drawer(i, win)
         target.draw()
         win.flip()
-        core.wait(3.0)
+        core.wait(3.0)'''
 
+def present_shapes(shapes,win):
+        #works for 6 different shapes
+        n_rows =2
+        n_cols=3
+        grid = [[None for _ in range(n_cols)] for _ in range(n_rows)]
+        titles = [[None for _ in range(n_cols)] for _ in range(n_rows)]
+
+        # Create shape stimuli and randomly fill the grid
+        for i, shape in enumerate(shapes):
+            row = i // 3 # Integer divisionff
+            col = i % 3 # Modulo operator
+            print(row,col)
+            grid[row][col] = drawer(shape, win)
+            titles[row][col] = visual.TextStim(win, text=shape, height=20,  color='black') # Create a text stimulus with the shape name
+
+        # Set positions for the shapes in the grid
+        x_positions = [-200, 0, 200]
+        y_positions = [200, -200]
+
+        for row in range(2):
+            for col in range(3):
+                grid[row][col].pos = [x_positions[col], y_positions[row]]
+                titles[row][col].pos = [x_positions[col], y_positions[row]-100] # Position the title below the shape
+                
+
+        # Display the grid
+        for row in grid:
+            for shape in row:
+                shape.draw()
+
+        for row in titles:
+            for title in row:
+                title.draw()
+
+
+
+
+def mouse_center():
+    mouse = event.Mouse()
+    mouse.setPos(newPos=(0, 0))
+    
 def start_practice_trials(win, n_rows, n_cols, shapes, practice_rounds=5):
     display_text('Press space to start the practice', win, time=False)
     
@@ -160,6 +203,7 @@ def start_practice_trials(win, n_rows, n_cols, shapes, practice_rounds=5):
         display_text(f"Find the {target.name}", win, time_of_display=1.5)
 
         #DISPLAY FIXATION POINT
+        mouse_center()
         draw_fixation_piont(win, random.uniform(1,3))
 
         # Create shape stimuli and randomly fill the grid
