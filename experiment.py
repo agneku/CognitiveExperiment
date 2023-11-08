@@ -26,7 +26,7 @@ expInfo['expName'] = expName
 filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant_id'], 
                                                   expName, expInfo['date'])
 
-# An ExperimentHandler isn't essential but helps with data saving
+# An ExperimentHandler isn't essential but helps with data saving   
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
     savePickle=True, saveWideText=True,
@@ -37,7 +37,7 @@ win = visual.Window([800, 800], units='pix', fullscr=True, color=[1,1,1],
                     colorSpace='rgb')
 
 # count_per_type = 20 in the final version (20 of each types of cues)
-cues_stratified_order = functions.stratify_cues(count_per_type=1)
+cues_stratified_order = functions.stratify_cues(count_per_type=20)
 # count_per_type*3 
 trial_number = len(cues_stratified_order)
 
@@ -48,7 +48,7 @@ shapes = ['square', 'diamond', 'circle', 'triangle', 'hexagon', 'heart']
 functions.present_shapes(shapes,win)
 
 # LEARNING TRIAL - comment out if testing
-functions.start_practice_trials(win, n_rows, n_cols, shapes, practice_rounds=2)
+functions.start_practice_trials(win, n_rows, n_cols, shapes, practice_rounds=3)
 
 
 functions.display_text('Press space when ready to start the experiment', win, time=False)
